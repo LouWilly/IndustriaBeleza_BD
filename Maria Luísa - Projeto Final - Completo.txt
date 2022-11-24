@@ -1,0 +1,94 @@
+Maria Luísa - Projeto Final: BD - TXT Completo
+
+Caso Indústria Beleza ltda.
+
+CREATE DATABASE Industria_Beleza;
+
+USE Industria_Beleza;
+
+CREATE TABLE Regiao (
+nome_regiao VARCHAR (50) NOT NULL,
+codigo_regiao INT PRIMARY KEY IDENTITY
+);
+
+CREATE TABLE Ponto_Estrategico(
+nome_pontoest VARCHAR (50) NOT NULL,
+codigo_regiao INT FOREIGN KEY REFERENCES Regiao
+);
+
+CREATE TABLE Veiculo(
+codigo_veiculo INT PRIMARY KEY IDENTITY,
+modelo_veiculo VARCHAR (20) NOT NULL,
+marca_veiculo VARCHAR (20) NOT NULL,
+placa_veiculo VARCHAR (7) NOT NULL
+);
+
+
+CREATE TABLE Produto(
+codigo_produto INT PRIMARY KEY IDENTITY,
+nome_produto VARCHAR (50) NOT NULL,
+valor_produto VARCHAR (12) NOT NULL,
+cdg_barra_produto INT
+);
+
+CREATE TABLE Vendedor(
+codigo INT PRIMARY KEY IDENTITY,
+nome_vendedor VARCHAR (60) NOT NULL,
+codigo_regiao INT FOREIGN KEY REFERENCES Regiao,
+codigo_produto INT FOREIGN KEY REFERENCES Produto
+);
+
+CREATE TABLE Cliente(
+codigo_cliente INT PRIMARY KEY IDENTITY,
+nome_cliente VARCHAR (60) NOT NULL,
+endereco_cliente VARCHAR (60) NOT NULL,
+cidade_cliente VARCHAR (50) NOT NULL,
+uf_cliente VARCHAR (2) NOT NULL
+);
+
+CREATE TABLE Venda(
+codigo_venda INT PRIMARY KEY,
+quantidade_venda INT NOT NULL,
+valor_venda VARCHAR (12) NOT NULL,
+codigo_produto INT FOREIGN KEY REFERENCES Produto
+);
+
+CREATE TABLE Nota_Fiscal (
+codigo_vendedor INT FOREIGN KEY REFERENCES Vendedor,
+codigo_venda INT FOREIGN KEY REFERENCES Venda
+);
+
+INSERT INTO regiao(nome_regiao) 
+VALUES('AE Carvalho'), ('Itaquera'),('José Bonifácio'), ('Vila Carmosina'), ('Guaianazes'), ('Lageado'),('São Miguel Paulista'), ('Itaim Paulista'), ('Artur Alvim'), ('Vila Ré'), ('Vila Matilde'), ('Penha');
+
+INSERT INTO Ponto_Estrategico(nome_pontoest)
+VALUES('Etec Zona Leste'),('Shopping Metrô Itaquera'),('Praça Brasil'),('Hospital Santa Marcelina'), ('Parque Vila do Rodeio'), ('CEU Lageado'), ('Praça do Forró'), ('Hospital 8 de Maio'), ('Neo Química Arena'), ('UBS Vila Granada'), ('Paróquia Nossa Senhora do Belo Ramo'), ('Shopping Penha');
+
+INSERT INTO Veiculo(modelo_veiculo,marca_veiculo,placa_veiculo)
+VALUES ('Strada','Fiat', 'EUH9759'),('Fiesta', 'Ford', 'DHY5555'),('CITY Sedan','Honda','CIE1181');
+
+INSERT INTO Produto(nome_produto,valor_produto)
+VALUES('Batom','R$15,00'), ('Hidratante','R$20,00'), ('Esmalte','R$4,50'), ('Máscara Facial','R$7,50'), ('Blush','R$27,50'), ('Base','R$12,50');
+
+INSERT INTO Vendedor(nome_vendedor)
+VALUES ('Rebeca Ana Campos'), ('Jennifer Mirella Drumond'), ('Benjamin Márcio Moura'), ('Carla Isis Sophia Moraes'), ('Mirella Maya Daiane Sales'), ('Guilherme Mateus Leandro Carvalho'), ('Davi Alexandre Raimundo Castro');
+
+INSERT INTO Cliente(nome_cliente, endereco_cliente,cidade_cliente,uf_cliente)
+VALUES ('Esther Bianca Ramos','Rua Três Ranchos','São Paulo','SP'), ('Alessandra Ana Martins','Rua Luiz Rubino','São Paulo','SP'), ('Gabriel André Yago Gomes','Rua Padre Serafim Leite','São Paulo','SP'), ('Elias Thiago Rodrigo Rodrigues','Via de Pedestre Maine','São Paulo','SP'), ('Isabela Fabiana Lorena Silveira','Rua Botupuca','São Paulo','SP');
+
+INSERT INTO Venda(codigo_venda,quantidade_venda,valor_venda)
+VALUES(1,10,200), (2,5,75);
+
+SELECT * FROM Venda order by valor_venda
+
+SELECT * FROM Regiao where nome_regiao like 'Itaquera'
+
+SELECT * FROM Regiao where nome_regiao not like 'Artur Alvim'
+
+
+SELECT * FROM Veiculo where codigo_veiculo>1
+
+SELECT * FROM Regiao where codigo_regiao>4
+
+SELECT * FROM Ponto_Estrategico where nome_pontoest like 'Etec Zona Leste'
+
